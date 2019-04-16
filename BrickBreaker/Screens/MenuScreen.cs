@@ -15,6 +15,7 @@ namespace BrickBreaker
         public MenuScreen()
         {
             InitializeComponent();
+            lorenAllignment();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -33,6 +34,13 @@ namespace BrickBreaker
 
             gs.Location = new Point((form.Width - gs.Width) / 2, (form.Height - gs.Height) / 2);
         }
+
+        private void lorenAllignment()
+        {
+            playButton.Location = new Point((this.Width - playButton.Width) / 2, 170);
+            exitButton.Location = new Point((this.Width - exitButton.Width) / 2, 290);
+        }
+       
 
     }
 }
