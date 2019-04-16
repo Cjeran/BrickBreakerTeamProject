@@ -73,9 +73,19 @@ namespace BrickBreaker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap buttonBoarder {
+        internal static System.Drawing.Bitmap blueButton {
             get {
-                object obj = ResourceManager.GetObject("buttonBoarder", resourceCulture);
+                object obj = ResourceManager.GetObject("blueButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pinkButton {
+            get {
+                object obj = ResourceManager.GetObject("pinkButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
