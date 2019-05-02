@@ -19,24 +19,27 @@ namespace BrickBreaker
 		public HighScreen()
         {
             InitializeComponent();
-			HighScreen_Load();
         }
 
 
-		private void button1_Click(object sender, EventArgs e)
+
+        private void menuButton_Click(object sender, EventArgs e)
+        {
+
+            Form form = this.FindForm();
+            MenuScreen ms = new MenuScreen();
+
+            ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
+
+            form.Controls.Add(ms);
+            form.Controls.Remove(this);
+        }
+
+        private void HighScreen_Load(object sender, EventArgs e)
+
+		
 		{
-			Form form = this.FindForm();
-			MenuScreen ms = new MenuScreen();
-
-			ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
-
-			form.Controls.Add(ms);
-			form.Controls.Remove(this);
-		}
-
-		private void HighScreen_Load()
-		{
-            allign();
+           
             XmlReader reader = XmlReader.Create("Resources/HighScores.xml");
 
 			while (reader.Read())
@@ -106,20 +109,13 @@ namespace BrickBreaker
 						  "10. " + name10 + " - " + score10;
 		}
 
-		private void label1_Click(object sender, EventArgs e)
-        {
-            Form form = this.FindForm();
-            MenuScreen ms = new MenuScreen();
-
-            ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
-
-            form.Controls.Add(ms);
-            form.Controls.Remove(this);
-        }
+		
 
         private void allign()
         {
-            button1.Location = new Point((this.Width - button1.Width) / 2, (this.Height - button1.Height) / 2);
+
+            menuButton.Location = new Point((this.Width - menuButton.Width) / 2, (this.Height - menuButton.Height) / 2);
+
         }
     }
 }
