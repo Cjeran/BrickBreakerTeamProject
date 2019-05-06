@@ -367,17 +367,24 @@ namespace BrickBreaker
 
         public void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            Pen hitboxPen = new Pen(Color.Blue);
+
             //Draw Paddle
             e.Graphics.DrawImage(Properties.Resources.Player1, paddle.x, paddle.y);
-
+            
             //Draw Ball
             e.Graphics.DrawImage(Properties.Resources.ball, ball.x, ball.y);
-
+            //e.Graphics.DrawRectangle(hitboxPen, ball.x, ball.y, ball.size +5, ball.size+5);
+            
             // Draws blocks
             foreach (Block b in blocks)
             {
                
                 e.Graphics.DrawImage(b.UpdateColour(), b.x, b.y);
+               // e.Graphics.DrawRectangle(hitboxPen, b.x, b.y+3, 2, b.height); // left hitbox
+               // e.Graphics.DrawRectangle(hitboxPen, b.x + b.width + 13, b.y+3, 2, b.height); //right
+               // e.Graphics.DrawRectangle(hitboxPen, b.x +2, b.y + b.height + 4, b.width + 11, 2); //bot
+               // e.Graphics.DrawRectangle(hitboxPen, b.x +2, b.y, b.width + 11, 2); //top
             }
 
             // Draws powerups
