@@ -11,10 +11,11 @@ namespace BrickBreaker
     {
         public int powerValue;
         public int x, y, powerSpeed, size;
+        public int ballTimer, paddleTimer, scoreTimer = 0;
         public Color colour;
 
         // create a random number generator 
-       
+
 
         public PowerUp(int _x, int _y, int _powerSpeed, int _size, int _powerValue)
         {
@@ -25,34 +26,36 @@ namespace BrickBreaker
             powerValue = _powerValue;
         }
 
-        public void PowerUpCollision(Paddle p)
+        public Boolean PowerUpCollision(Paddle p)
         {
             Rectangle powerUpRec = new Rectangle(x, y, size, size);
             Rectangle paddleRec = new Rectangle(p.x, p.y, p.width, p.height);
 
-            if (powerUpRec.IntersectsWith(paddleRec))
-            {
-                switch (powerValue)
-                {
-                    case 1:
-                        GameScreen.bSpeedMult = GameScreen.bSpeedMult + 5;
-                        break;
-                    case 2:
-                        GameScreen.pSpeedMult = GameScreen.pSpeedMult + 5;
-                        break;
-                    case 3:
-                        GameScreen.scoreMult = GameScreen.scoreMult + 5;
-                        break;
-                    case 4:
-                        GameScreen.score = GameScreen.score + 2;
-                        break;
-                }
-            }
+            return (powerUpRec.IntersectsWith(paddleRec));
         }
 
-        public Color UpdateColour()
+        public Color UpdatePowerUp()
         {
-           return Color.Blue;
+            switch (powerValue)
+            {
+                case 1:
+                    GameScreen.bSpeedMult = GameScreen.bSpeedMult + 1;
+                    return Color.Blue;
+                case 2:
+                    GameScreen.pSpeedMult = GameScreen.pSpeedMult + 1;
+                    return Color.Green;
+                case 3:
+                    GameScreen.scoreMult = GameScreen.scoreMult + 1;
+                    return Color.Red;
+                case 4:
+                    GameScreen.score = GameScreen.score + 2000;
+                    return Color.Pink;
+                case 5:
+                    GameScreen.score = GameScreen.lives++;
+                    return Color.White;
+                default:
+                    return Color.Yellow;
+            }
         }
 
         //move the power up down the screen

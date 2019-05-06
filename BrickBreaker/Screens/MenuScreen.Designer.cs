@@ -144,7 +144,7 @@
             this.showDebug.TabIndex = 6;
             this.showDebug.Text = "Show Debug Shortcuts";
             this.showDebug.UseVisualStyleBackColor = false;
-            this.showDebug.CheckedChanged += new System.EventHandler(this.showDebug_CheckedChanged);
+            //this.showDebug.CheckedChanged += new System.EventHandler(this.showDebug_CheckedChanged);
             // 
             // MenuScreen
             // 

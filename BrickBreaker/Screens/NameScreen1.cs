@@ -15,6 +15,10 @@ namespace BrickBreaker
         public NameScreen1()
         {
             InitializeComponent();
+            scoreText.Location = new Point((this.Width - scoreText.Width) / 2, 55);
+            initial1.Location = new Point((initial2.Location.X - initial1.Width), (this.Height - initial1.Height) / 2);
+            initial2.Location = new Point((this.Width - initial2.Width) / 2, (this.Height - initial2.Height) / 2);
+            initial3.Location = new Point((initial2.Location.X + initial2.Width), (this.Height - initial3.Height) / 2);
         }
 		int initial = 1;
 		char c = 'A';

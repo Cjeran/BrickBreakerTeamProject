@@ -209,6 +209,27 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backMusic.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brickCollision.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collision.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deathSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lifeLost.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paddleCollision.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Powerup.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
