@@ -7,8 +7,9 @@ namespace BrickBreaker
 {
     public class Ball
     {
-        Boolean angle1, angle2;
-        public int x, y, xSpeed, ySpeed, size;
+        Boolean angle1, angle2, travelDown, travelRight;
+        public int x, y, size;
+        public double speed, xSpeed, ySpeed;
         public Color colour;
 
         SoundPlayer paddleCollide = new SoundPlayer(Properties.Resources.paddleCollision);
@@ -17,20 +18,50 @@ namespace BrickBreaker
 
         public static Random rand = new Random();
 
-        public Ball(int _x, int _y, int _xSpeed, int _ySpeed, int _ballSize)
+        public Ball(int _x, int _y, double _speed, int _ballSize)
         {
             x = _x;
             y = _y;
-            xSpeed = _xSpeed;
-            ySpeed = _ySpeed;
+            speed = _speed;
             size = _ballSize;
-
         }
 
         public void Move()
         {
-            x = x + xSpeed;
-            y = y + ySpeed;
+            if (angle1)
+            {
+                xSpeed = speed * 1.25;
+                ySpeed = speed * 0.75;
+            }
+            else if (angle2)
+            {
+                xSpeed = speed * 1.5;
+                ySpeed = speed * 0.5;
+            }
+            else
+            {
+                xSpeed = speed;
+                ySpeed = speed;
+            }
+
+            if (travelRight)
+            {
+                x += Convert.ToInt16(xSpeed);
+            }
+            else
+            {
+                x -= Convert.ToInt16(xSpeed);
+            }
+
+            if (travelDown)
+            {
+                y += Convert.ToInt16(ySpeed);
+            }
+            else
+            {
+                y -= Convert.ToInt16(ySpeed);
+            }
+            
         }
 
         public bool BlockCollision(Block b)
@@ -44,22 +75,22 @@ namespace BrickBreaker
 
             if (ballRec.IntersectsWith(blockTopRec) && ySpeed > 0)
             {
-                ySpeed = ySpeed * -1;
+                travelDown = false;
                 otherCollide.Play();
             }
             else if (ballRec.IntersectsWith(blockBotRec) && ySpeed < 0)
             {
-                ySpeed = ySpeed * -1;
+                travelDown = true;
                 otherCollide.Play();
             }
             else if (ballRec.IntersectsWith(blockLeftRec) && xSpeed > 0)
             {
-                xSpeed = xSpeed * -1;
+                travelRight = false;
                 otherCollide.Play();
             }
             else if (ballRec.IntersectsWith(blockRightRec) && xSpeed < 0)
             {
-                xSpeed = xSpeed * -1;
+                travelRight = true;
                 otherCollide.Play();
             }
 
@@ -76,67 +107,58 @@ namespace BrickBreaker
 
         public void PaddleCollision(Paddle p, bool pMovingLeft, bool pMovingRight)
         {
-            int midX = x + (size / 2);
+            int midX = x + (size / 2), segment = p.width / 6;
 
             Rectangle ballRec = new Rectangle(x, y, size, size);
             Rectangle paddleRec = new Rectangle(p.x, p.y, p.width, p.height);
 
-            Rectangle paddleRec1 = new Rectangle(p.x, p.y, p.width, p.height);
-            Rectangle paddleRec2 = new Rectangle(p.x, p.y, p.width, p.height);
-            Rectangle paddleRec3 = new Rectangle(p.x, p.y, p.width, p.height);
-            Rectangle paddleRec4 = new Rectangle(p.x, p.y, p.width, p.height);
-            Rectangle paddleRec5 = new Rectangle(p.x, p.y, p.width, p.height);
-            Rectangle paddleRec6 = new Rectangle(p.x, p.y, p.width, p.height);
+            Rectangle paddleRec1 = new Rectangle(p.x, p.y, segment, p.height);
+            Rectangle paddleRec2 = new Rectangle(p.x + segment, p.y, segment, p.height);
+            Rectangle paddleRec3 = new Rectangle(p.x + (segment * 2), p.y, segment, p.height);
+            Rectangle paddleRec4 = new Rectangle(p.x + (segment * 3), p.y, segment, p.height);
+            Rectangle paddleRec5 = new Rectangle(p.x + (segment * 4), p.y, segment, p.height);
+            Rectangle paddleRec6 = new Rectangle(p.x + (segment * 5), p.y, segment, p.height);
 
-            if (ballRec.IntersectsWith(paddleRec))
+            if (ballRec.IntersectsWith(paddleRec) && ySpeed > 0)
             {
                 paddleCollide.Play();
+                travelDown = false;
 
-                if (x < p.x + p.width * 4 / 8) // divide the paddle into 8 sections with different angles of ball launch
+                if (ballRec.IntersectsWith(paddleRec1))
                 {
-                    ySpeed = -5;
-                    xSpeed = -5;
+                    angle1 = false;
+                    angle2 = true;
                 }
-                else if (x < p.x + p.width * 5 / 8)
+                else if (ballRec.IntersectsWith(paddleRec2))
                 {
-                    ySpeed = -5;
-                    xSpeed = 5;
+                    angle1 = true;
+                    angle2 = false;
                 }
-                else if (x <= p.x + p.width / 8)
+                else if (ballRec.IntersectsWith(paddleRec3))
                 {
-                    ySpeed = -2;
-                    xSpeed = -8;
+                    angle1 = false;
+                    angle2 = false;
                 }
-                else if (x < p.x + p.width * 2 / 8)
+                else if (ballRec.IntersectsWith(paddleRec4))
                 {
-                    ySpeed = -3;
-                    xSpeed = -7;
+                    angle1 = false;
+                    angle2 = false;
                 }
-                else if (x < p.x + p.width * 3 / 8)
+                else if (ballRec.IntersectsWith(paddleRec5))
                 {
-                    ySpeed = -4;
-                    xSpeed = -6;
+                    angle1 = true;
+                    angle2 = false;
                 }
-                else if (x < p.x + p.width * 6 / 8)
+                else if (ballRec.IntersectsWith(paddleRec6))
                 {
-                    ySpeed = -4;
-                    xSpeed = 6;
-                }
-                else if (x < p.x + p.width * 7 / 8)
-                {
-                    ySpeed = -3;
-                    xSpeed = 7;
-                }
-                else if ((x + size) <= p.x + p.width)
-                {
-                    ySpeed = -2;
-                    xSpeed = 8;
+                    angle1 = false;
+                    angle2 = true;
                 }
 
-                if (pMovingLeft)
-                    xSpeed = -Math.Abs(xSpeed);
+                    if (pMovingLeft)
+                    travelRight = false;
                 else if (pMovingRight)
-                    xSpeed = Math.Abs(xSpeed);
+                    travelRight = true;
             }
         }
 
@@ -148,7 +170,7 @@ namespace BrickBreaker
                 otherCollide.Play();
                 if (xSpeed <= 0)
                 {
-                    xSpeed = xSpeed * -1;
+                    travelRight = true;
                 }
             }
 
@@ -158,7 +180,7 @@ namespace BrickBreaker
                 otherCollide.Play();
                 if (xSpeed >= 0)
                 {
-                    xSpeed = xSpeed * -1;
+                    travelRight = false;
                 }
             }
 
@@ -168,7 +190,7 @@ namespace BrickBreaker
                 otherCollide.Play();
                 if (ySpeed <= 0)
                 {
-                    ySpeed = ySpeed * -1;
+                    travelDown = true;
                 }
             }
         }

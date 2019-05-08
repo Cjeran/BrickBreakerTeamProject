@@ -93,11 +93,10 @@ namespace BrickBreaker
             int ballY = this.Height - paddle.height - 80;
 
             // Creates a new ball           
-            int xSpeed = 6;
-            int ySpeed = 6;
+            int speed = 6;
             int ballSize = 20;
-
-            ballList.Add(new Ball(ballX, ballY, xSpeed, ySpeed, ballSize));
+            ball = new Ball(ballX, ballY, speed, ballSize);
+            ballList.Add(new Ball(ballX, ballY, speed, ballSize));
  
 
             //Soundplayer
@@ -245,7 +244,10 @@ namespace BrickBreaker
             else if (!holding)
             {
                 // Move ball
-                ball.Move();
+                foreach (Ball ball in ballList)
+                {
+                    ball.Move();
+                }
             }
             //Move powerups
 
@@ -267,10 +269,13 @@ namespace BrickBreaker
                         break;
                     }
                 }
-            
+
 
             // Check for collision with top and side walls
-            ball.WallCollision(this);
+            foreach (Ball b in ballList)
+            {
+                b.WallCollision(this);
+            }
 
             // Check for ball hitting bottom of screen
             foreach (Ball b in ballList)
@@ -292,7 +297,7 @@ namespace BrickBreaker
                         lives--;
 
                         // Moves the ball back to origin
-                        b.x = ((paddle.x - (ball.size / 2)) + (paddle.width / 2));
+                        b.x = ((paddle.x - (b.size / 2)) + (paddle.width / 2));
                         b.y = (this.Height - paddle.height) - 85;
                         b.xSpeed = 6;
                         b.ySpeed = 6;
@@ -319,8 +324,7 @@ namespace BrickBreaker
                 // Moves the ball back to origin
                 int ballX = ((paddle.x - (ball.size / 2)) + (paddle.width / 2));
                 int ballY = (this.Height - paddle.height) - 85;
-                int xSpeed = 6;
-                int ySpeed = 6;
+                int speed = 6;
                 int ballSize = 20;
 
                 scoreMult = 1;
@@ -328,7 +332,7 @@ namespace BrickBreaker
                 bSpeedMult = 1;
 
 
-                ball = new Ball(ballX, ballY, xSpeed, ySpeed, ballSize);
+                ball = new Ball(ballX, ballY, speed, ballSize);
                 ballList.Add(ball);
                 holding = true;
 
@@ -341,54 +345,59 @@ namespace BrickBreaker
             }
 
             // Check for collision of ball with paddle, (incl. paddle movement)
-            ball.PaddleCollision(paddle, leftArrowDown, rightArrowDown);
-            if (Form1.twoPlayer)
+            foreach (Ball ball in ballList)
             {
-                ball.PaddleCollision(paddle2, aKeyDown, dKeyDown);
-            }
-            // Check if ball has collided with any blocks
-            foreach (Block b in blocks)
-            {
-                if (ball.BlockCollision(b))
+                ball.PaddleCollision(paddle, leftArrowDown, rightArrowDown);
+
+
+                if (Form1.twoPlayer)
                 {
-                    bCollide.Play();
-                    --b.hp;
-                    //blocks.Remove(b);
-                    int blockX = b.x;
-                    int blockY = b.y + b.height;
-                    int blockSize = b.width;
+                    ball.PaddleCollision(paddle2, aKeyDown, dKeyDown);
+                }
 
-                    if (b.hp == 0)
+                // Check if ball has collided with any blocks
+                foreach (Block b in blocks)
+                {
+                    if (ball.BlockCollision(b))
                     {
-                        blocks.Remove(b);
+                        bCollide.Play();
+                        --b.hp;
+                        //blocks.Remove(b);
+                        int blockX = b.x;
+                        int blockY = b.y + b.height;
+                        int blockSize = b.width;
 
-                        score = score + 100 * scoreMult;
-                        double d = score / 500;
-                        double scoreint = Math.Round(d);
-
-                        if (scoreint > lastPower)
+                        if (b.hp == 0)
                         {
-                            lastPower = scoreint;
-                            NumberGen();
-                            int powertype = powerValue;
+                            blocks.Remove(b);
 
-                            PowerUp power = new PowerUp(blockSize / 2 + blockX, blockY, powerupSpeed, 15, powertype);
-                            powers.Add(power);
+                            score = score + 100 * scoreMult;
+                            double d = score / 500;
+                            double scoreint = Math.Round(d);
+
+                            if (scoreint > lastPower)
+                            {
+                                lastPower = scoreint;
+                                NumberGen();
+                                int powertype = powerValue;
+
+                                PowerUp power = new PowerUp(blockSize / 2 + blockX, blockY, powerupSpeed, 15, powertype);
+                                powers.Add(power);
+                            }
+
                         }
 
-                    }
+                        if (blocks.Count == 0)
+                        {
+                            currentLevel++;
+                            NewLevel();
+                            holding = true;
+                        }
 
-                    if (blocks.Count == 0)
-                    {
-                        currentLevel++;
-                        NewLevel();
-                        holding = true;
+                        break;
                     }
-
-                    break;
                 }
             }
-
             //Write lives/score
             lifelabel.Text = "Lives: " + lives;
             scoreLabel.Text = "Score: " + score;
