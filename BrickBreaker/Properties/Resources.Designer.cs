@@ -186,7 +186,6 @@ namespace BrickBreaker.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///
         ///&lt;level number =&quot;3&quot; name =&quot;This is Jimmy&quot;&gt;
         ///  &lt;brick x =&quot;0&quot; y =&quot;200&quot; hp =&quot;4&quot;/&gt;
         ///  &lt;brick x =&quot;93&quot; y =&quot;200&quot; hp =&quot;4&quot;/&gt;
@@ -200,7 +199,7 @@ namespace BrickBreaker.Properties {
         ///  &lt;brick x =&quot;0&quot; y =&quot;147&quot; hp =&quot;2&quot;/&gt;
         ///  &lt;brick x =&quot;93&quot; y =&quot;147&quot; hp =&quot;2&quot;/&gt;
         ///  &lt;brick x =&quot;186&quot; y =&quot;147&quot; hp =&quot;2&quot;/&gt;
-        ///  &lt;brick x =&quot; [rest of string was truncated]&quot;;.
+        ///  &lt;brick x =&quot;27 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Level3 {
             get {
@@ -275,6 +274,29 @@ namespace BrickBreaker.Properties {
         internal static string Level6 {
             get {
                 return ResourceManager.GetString("Level6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;level number =&quot;7&quot; name =&quot;The Spaceman Strikes!&quot;&gt;
+        ///  &lt;brick x =&quot;41&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///  &lt;brick x =&quot;171&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///  &lt;brick x =&quot;286&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///  &lt;brick x =&quot;402&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///  &lt;brick x =&quot;493&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///  &lt;brick x =&quot;600&quot; y =&quot;207&quot; hp =&quot;2&quot;/&gt;
+        ///
+        ///  &lt;brick x =&quot;108&quot; y =&quot;340&quot; hp =&quot;3&quot;/&gt;
+        ///  &lt;brick x =&quot;224&quot; y =&quot;340&quot; hp =&quot;3&quot;/&gt;
+        ///  &lt;brick x =&quot;339&quot; y =&quot;340&quot; hp =&quot;3&quot;/&gt;
+        ///  &lt;brick x =&quot;452&quot; y =&quot;340&quot; hp =&quot;3&quot;/&gt;
+        ///  &lt;brick x =&quot;552&quot; y =&quot;340&quot; hp =&quot;3&quot;/&gt;
+        ///   [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Level7 {
+            get {
+                return ResourceManager.GetString("Level7", resourceCulture);
             }
         }
         
